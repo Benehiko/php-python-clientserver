@@ -1,0 +1,17 @@
+[08-Aug-2017 17:09:40 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/benehiko/public_html/php/verify/verify.php on line 20
+[08-Aug-2017 17:25:50 UTC] PHP Warning:  mysqli_stmt::bind_param(): Number of elements in type definition string doesn't match number of bind variables in /home/benehiko/public_html/php/dbhandler.php on line 26
+[08-Aug-2017 17:25:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::fetch_results() in /home/benehiko/public_html/php/dbhandler.php:29
+Stack trace:
+#0 /home/benehiko/public_html/php/verify/verify.php(15): dbhandler->verifyUser('16', '0462ce19b3bf24f...')
+#1 {main}
+  thrown in /home/benehiko/public_html/php/dbhandler.php on line 29
+[08-Aug-2017 17:26:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::fetch_results() in /home/benehiko/public_html/php/dbhandler.php:29
+Stack trace:
+#0 /home/benehiko/public_html/php/verify/verify.php(15): dbhandler->verifyUser(16, '0462ce19b3bf24f...')
+#1 {main}
+  thrown in /home/benehiko/public_html/php/dbhandler.php on line 29
+[08-Aug-2017 17:31:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::fetch_result() in /home/benehiko/public_html/php/dbhandler.php:29
+Stack trace:
+#0 /home/benehiko/public_html/php/verify/verify.php(15): dbhandler->verifyUser(16, '0462ce19b3bf24f...')
+#1 {main}
+  thrown in /home/benehiko/public_html/php/dbhandler.php on line 29

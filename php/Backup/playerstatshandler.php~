@@ -1,0 +1,133 @@
+<?php
+	session_start();
+    require('dbconnect.php');
+	$level = null;
+	$gamelevel = null;
+	$mysqli = null;
+
+   if ((isset($_POST['level'])) && (isset($_POST['gamelevel'])) && (!empty($_POST['level'])) && (!empty($_POST['gamelevel'])))
+	{
+        init();
+		$studentId = getStudentID();
+		if ($studentId != false){
+			if (getStats($studentId) != false){
+				if ($_POST['level'] > $level){
+					updateLevel($studentId);
+				}
+				if ($_POST['gamelevel'] > $gamelevel){
+					updateGamelevel($studentId);
+				}
+
+				if ($level == 12){
+					if (getEmailSent($studentId) == false){
+					$to = 'admin@codekitty.co.za';
+					$message = "Student completed the task with the following details: \nEmail: ".$_SESSION['username']."\nStudent ID: ".$studentId;
+					$headers = "From: webmaster@codekitty.co.za" . "\r\n" .
+    								   "Reply-To: admin@codekitty.co.za" . "\r\n" .
+   									   "X-Mailer: PHP/".phpversion();
+					$subject = "FIT1050 Lecture - Student ".$studentId." finished task";
+					mail($to, $subject, $message, $headers);
+					updateEmailSent($studentId);
+					}					
+				}
+
+				$stats = $_POST['level'].":".$_POST['gamelevel'];
+				setcookie("edu_stats",$stats,time()+10800,'../');
+				echoData();
+			}else{
+				echo "Cant get stats";
+			}
+		}else{
+			echo "Cant get student Id";
+		}
+	}else{
+		echo "Empty data sent";
+	}    
+
+	function init(){
+		$db = new DBConnect;
+		$GLOBALS['mysqli'] = $db->connect();
+	}
+
+	function updateEmailSent($studentId){
+		$emailsent = true;
+		if ($stmt = $GLOBALS['mysqli']->prepare("UPDATE user_data SET emailsent = ? WHERE studentId = ? ")){
+               $stmt->bind_param("is",$emailsent,$studentId);
+			   $stmt->execute();
+               $stmt->close();               
+           }
+
+	}
+
+	function getEmailSent($studentId){
+		if (($stmt = $GLOBALS['mysqli']->prepare("SELECT emailsent FROM user_data WHERE studentId = ?"))){
+						$stmt->bind_param("i",$studentId);
+						$stmt->execute();
+						$stmt->bind_result($emailsent);
+						$stmt->fetch();
+						$stmt->close();
+
+			return $emailsent;
+		}
+	}
+
+	function getStats($studentId){
+		 if (($stmt = $GLOBALS['mysqli']->prepare("SELECT level,gamelevel FROM user_data WHERE studentId = ?"))){
+						$stmt->bind_param("s",$studentId);
+						$stmt->execute();
+						$stmt->bind_result($GLOBALS['level'],$GLOBALS['gamelevel']);
+						$stmt->fetch();
+						$stmt->close();
+
+			return true;
+		}else{
+			return false;
+		}	
+	}
+
+
+	function updateLevel($studentId){
+		   if ($stmt = $GLOBALS['mysqli']->prepare("UPDATE user_data SET level = ? WHERE studentId = ? ")){
+               $stmt->bind_param("is",$_POST['level'],$studentId);
+			   $stmt->execute();
+               $stmt->close();
+
+               $_SESSION['level'] = $_POST['level'];
+           }
+				
+	}
+
+	function updateGamelevel($studentId){
+	    if ($stmt = $GLOBALS['mysqli']->prepare("UPDATE user_data SET gamelevel = ? WHERE studentId = ?")){
+		    $stmt->bind_param("is",$_POST['gamelevel'],$studentId);
+		    $stmt->execute();
+			$stmt->close();
+
+			$_SESSION['gamelevel'] = $_POST['gamelevel'];
+		}
+		
+	}
+
+	function getStudentID(){
+		if (($stmt = $GLOBALS['mysqli']->prepare("SELECT studentId FROM users WHERE username = ?"))){
+				$stmt->bind_param("s",$_COOKIE['edu_LOGIN']);
+				$stmt->execute();
+				$stmt->bind_result($studentId);
+				$stmt->fetch();
+				$stmt->close();
+
+				return $studentId;
+		}
+		return false;
+	}
+
+	function echoData(){
+		$data = $GLOBALS['level'].":".$GLOBALS['gamelevel'];
+		setcookie("edu_stats",$data,time()+10800,'../');
+		echo $data;
+	}
+
+  
+				
+
+?>

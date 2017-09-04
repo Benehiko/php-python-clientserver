@@ -1,0 +1,38 @@
+[07-Aug-2017 03:45:49 UTC] PHP Fatal error:  Uncaught Error: Class 'dbhandler' not found in /home/benehiko/public_html/php/verify/verify.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/benehiko/public_html/php/verify/verify.php on line 12
+[07-Aug-2017 03:49:08 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:49:08 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:49:58 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:49:58 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:52:29 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:52:29 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:52:56 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:52:56 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:54:27 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:54:27 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:54:37 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:54:37 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:55:43 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:55:43 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:55:51 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:55:51 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:56:11 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:56:11 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:57:55 UTC] PHP Warning:  require(/php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:57:55 UTC] PHP Fatal error:  require(): Failed opening required '/php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:58:01 UTC] PHP Warning:  require(/php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:58:01 UTC] PHP Fatal error:  require(): Failed opening required '/php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:58:07 UTC] PHP Warning:  require(/php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:58:07 UTC] PHP Fatal error:  require(): Failed opening required '/php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:59:17 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 03:59:17 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:01:33 UTC] PHP Warning:  require(/home/benehiko/public_html/php/verify/php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:01:33 UTC] PHP Fatal error:  require(): Failed opening required '/home/benehiko/public_html/php/verify/php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:01:35 UTC] PHP Warning:  require(/home/benehiko/public_html/php/verify/php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:01:35 UTC] PHP Fatal error:  require(): Failed opening required '/home/benehiko/public_html/php/verify/php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:07:26 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:07:26 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:07:31 UTC] PHP Warning:  require(../php/dbhandler.php): failed to open stream: No such file or directory in /home/benehiko/public_html/php/verify/verify.php on line 8
+[07-Aug-2017 04:07:31 UTC] PHP Fatal error:  require(): Failed opening required '../php/dbhandler.php' (include_path='.:/opt/alt/php71/usr/share/pear') in /home/benehiko/public_html/php/verify/verify.php on line 8
