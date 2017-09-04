@@ -12,7 +12,7 @@
       $dbhandler = new dbhandler();
 
       if (($msg = $dbhandler->registerUser($_POST['username'], $_POST['password']))) {
-          echo "User registered!";
+          echo "true";
       }else{echo "User not registered ".$msg;}
   }else{echo "Nothing entered!";}
 

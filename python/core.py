@@ -5,13 +5,17 @@ class Pyhandler:
     def __init__(self):
         self.url = "http://sepam.anzen-learning.xyz/"
 
-    def connect(self,file):
+    def get(self,file):
         content = urllib2.urlopen(self.url+file)
 
     def post(self,file,data):
         r = requests.post(self.url+file,data)
         if (r.status_code == 200):
-            return true
+            if (r.text == "true"):
+                return true
+            else:
+                print(r.text)
+                return false
         else:
             return false
 
