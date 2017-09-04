@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="39b9c69c-7068-40b9-8e52-1515bdb3e702" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php-admin/.idea/php.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php-admin/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php-admin/admin-panel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/php-admin/adminhandler.php" />
-    </list>
+    <list default="true" id="39b9c69c-7068-40b9-8e52-1515bdb3e702" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,12 +21,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="login.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="42" lean-forward="true" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-              <folding />
+              <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+              <folding>
+                <marker date="1502634936683" expanded="true" signature="328:376" ph="SELECT passw... users" />
+                <marker date="1502634936683" expanded="true" signature="667:710" ph="SELECT verif... user_data" />
+                <marker date="1502634936683" expanded="true" signature="1011:1061" ph="SELECT level... user_data" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,7 +50,7 @@
       <file leaf-file-name="dbhandler.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dbhandler.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
+            <state relative-caret-position="2700">
               <caret line="185" column="59" lean-forward="true" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
               <folding>
                 <marker date="1504503797447" expanded="true" signature="434:476" ph="SELECT verif... user_data" />
@@ -74,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dbconnect.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dbconnect.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dbconnect.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="12" lean-forward="false" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="19" />
+            <state relative-caret-position="105">
+              <caret line="7" column="27" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -94,12 +93,12 @@
       <list>
         <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/EmailHandler.php" />
-        <option value="$PROJECT_DIR$/dbconnect.php" />
         <option value="$PROJECT_DIR$/playerstatshandler.php" />
         <option value="$PROJECT_DIR$/verify.php" />
         <option value="$PROJECT_DIR$/emailhandler.php" />
         <option value="$PROJECT_DIR$/dbhandler.php" />
         <option value="$PROJECT_DIR$/register.php" />
+        <option value="$PROJECT_DIR$/dbconnect.php" />
       </list>
     </option>
   </component>
@@ -110,11 +109,11 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="92" />
-    <option name="y" value="30" />
-    <option name="width" value="1211" />
-    <option name="height" value="631" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="69" />
+    <option name="y" value="100" />
+    <option name="width" value="1201" />
+    <option name="height" value="634" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -132,6 +131,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -144,7 +144,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -184,18 +183,19 @@
       <workItem from="1502075335643" duration="1696000" />
       <workItem from="1504502871339" duration="1510000" />
       <workItem from="1504505882504" duration="13000" />
-      <workItem from="1504508490108" duration="1186000" />
+      <workItem from="1504508490108" duration="2242000" />
+      <workItem from="1504514565781" duration="1052000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21615000" />
+    <option name="totallyTimeSpent" value="23723000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="30" width="1366" height="738" extended-state="6" />
+    <frame x="69" y="100" width="1201" height="634" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19985358" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22731057" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -298,14 +298,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
     <entry file="file://$PROJECT_DIR$/dbconnect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -314,14 +307,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/emailhandler.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -364,14 +350,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
     <entry file="file://$PROJECT_DIR$/dbconnect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -380,14 +359,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="752">
-          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/emailhandler.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
@@ -416,14 +388,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
     <entry file="file://$PROJECT_DIR$/dbconnect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -432,14 +397,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/dbhandler.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1035">
@@ -482,14 +440,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
     <entry file="file://$PROJECT_DIR$/dbconnect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -498,14 +449,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/dbhandler.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -562,22 +506,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/dbconnect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -628,14 +558,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
     <entry file="file://$PROJECT_DIR$/dbconnect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -644,14 +567,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/php-admin/dbconnect.php" />
     <entry file="file://$PROJECT_DIR$/password.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -675,63 +591,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerstatshandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstatshandler.php" />
     <entry file="file://$PROJECT_DIR$/verify.php" />
-    <entry file="file://$PROJECT_DIR$/playerstats.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/verify/verify.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dbconnect.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="12" lean-forward="false" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dbhandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="185" column="59" lean-forward="true" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
-          <folding>
-            <marker date="1504503797447" expanded="true" signature="434:476" ph="SELECT verif... user_data" />
-            <marker date="1504503797447" expanded="true" signature="719:758" ph="SELECT hash user_data" />
-            <marker date="1504503797447" expanded="true" signature="1061:1107" ph="UPDATE user_... " />
-            <marker date="1504503797447" expanded="true" signature="1781:1826" ph="SELECT COUNT... users" />
-            <marker date="1504503797447" expanded="true" signature="2073:2112" ph="SELECT id FR... users" />
-            <marker date="1504503797447" expanded="true" signature="2463:2504" ph="UPDATE user_... " />
-            <marker date="1504503797447" expanded="true" signature="3601:3639" ph="SELECT hash user_data" />
-            <marker date="1504503797447" expanded="true" signature="4157:4202" ph="SELECT COUNT... user_data" />
-            <marker date="1504503797447" expanded="true" signature="4480:4519" ph="SELECT id FR... user_data" />
-            <marker date="1504503797447" expanded="true" signature="4755:4796" ph="UPDATE users... " />
-            <marker date="1504503797447" expanded="true" signature="4987:5029" ph="UPDATE user_... " />
-            <marker date="1504503797447" expanded="true" signature="5810:5854" ph="SELECT COUNT... user" />
-            <marker date="1504503797447" expanded="true" signature="6217:6265" ph="INSERT INTO user... " />
-            <marker date="1504503797447" expanded="true" signature="6405:6444" ph="SELECT id FR... users" />
-            <marker date="1504503797447" expanded="true" signature="6704:6792" ph="INSERT INTO user_data... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/playerstats.php" />
+    <entry file="file://$PROJECT_DIR$/verify/verify.php" />
     <entry file="file://$PROJECT_DIR$/emailhandler.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -753,7 +616,43 @@
     <entry file="file://$PROJECT_DIR$/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="9" column="42" lean-forward="true" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding>
+            <marker date="1502634936683" expanded="true" signature="328:376" ph="SELECT passw... users" />
+            <marker date="1502634936683" expanded="true" signature="667:710" ph="SELECT verif... user_data" />
+            <marker date="1502634936683" expanded="true" signature="1011:1061" ph="SELECT level... user_data" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dbhandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2700">
+          <caret line="185" column="59" lean-forward="true" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
+          <folding>
+            <marker date="1504503797447" expanded="true" signature="434:476" ph="SELECT verif... user_data" />
+            <marker date="1504503797447" expanded="true" signature="719:758" ph="SELECT hash user_data" />
+            <marker date="1504503797447" expanded="true" signature="1061:1107" ph="UPDATE user_... " />
+            <marker date="1504503797447" expanded="true" signature="1781:1826" ph="SELECT COUNT... users" />
+            <marker date="1504503797447" expanded="true" signature="2073:2112" ph="SELECT id FR... users" />
+            <marker date="1504503797447" expanded="true" signature="2463:2504" ph="UPDATE user_... " />
+            <marker date="1504503797447" expanded="true" signature="3601:3639" ph="SELECT hash user_data" />
+            <marker date="1504503797447" expanded="true" signature="4157:4202" ph="SELECT COUNT... user_data" />
+            <marker date="1504503797447" expanded="true" signature="4480:4519" ph="SELECT id FR... user_data" />
+            <marker date="1504503797447" expanded="true" signature="4755:4796" ph="UPDATE users... " />
+            <marker date="1504503797447" expanded="true" signature="4987:5029" ph="UPDATE user_... " />
+            <marker date="1504503797447" expanded="true" signature="5810:5854" ph="SELECT COUNT... user" />
+            <marker date="1504503797447" expanded="true" signature="6217:6265" ph="INSERT INTO user... " />
+            <marker date="1504503797447" expanded="true" signature="6405:6444" ph="SELECT id FR... users" />
+            <marker date="1504503797447" expanded="true" signature="6704:6792" ph="INSERT INTO user_data... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dbconnect.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="27" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="36" />
           <folding />
         </state>
       </provider>
