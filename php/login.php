@@ -9,7 +9,7 @@
 			$mysqli = $db->connect();
 			$_SESSION['loggedin'] = false;
 			
-			if (($stmt = $mysqli->prepare("SELECT password,id FROM users WHERE username = ?"))) {
+			if (($stmt = $mysqli->prepare("SELECT password,id FROM user WHERE username = ?"))) {
 				$stmt->bind_param("s",$_POST['username']);
 				$stmt->execute();
 				$stmt->bind_result($pass,$id);
