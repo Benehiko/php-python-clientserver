@@ -39,7 +39,7 @@ class Pyhandler:
 
     def session_check(self):
         data = {"sessionid":self.get_token()}
-        if self.post("checklogin.php",data):
+        if self.post("checklogin.php",data) == "true":
             print("logged in")
             return True
         print("Not logged in")

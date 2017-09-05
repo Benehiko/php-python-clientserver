@@ -7,7 +7,6 @@
 
 			$db = new DBConnect();
 			$mysqli = $db->connect();
-			$_SESSION['loggedin'] = false;
 			
 			if (($stmt = $mysqli->prepare("SELECT password,id FROM user WHERE username = ?"))) {
 				$stmt->bind_param("s",$_POST['username']);
@@ -27,10 +26,9 @@
 					if ($verified == 1){
                         if (password_verify($_POST['password'], $pass)){
 
-                                setcookie("sepam_LOGIN", $_POST['username'], time()+10800, '../');
-                                $_SESSION['loggedin'] = true;
-                                $_SESSION['token'] = password_hash($_POST['username'], PASSWORD_BCRYPT);
-                                echo $_SESSION['token'];
+                              //  setcookie("sepam_LOGIN", $_POST['username'], time()+10800, '../');
+                                $_SESSION['sessionid'] = password_hash($_POST['username'], PASSWORD_BCRYPT);
+                                echo $_SESSION['sessionid'];
 
 
                         }else{
