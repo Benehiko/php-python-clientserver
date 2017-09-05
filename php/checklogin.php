@@ -1,15 +1,13 @@
 <?php
 ini_set('display_errors', 'On');
+session_start();
 
-        session_start();
-	
-		if ((isset($_COOKIE['edu_LOGIN'])) && (!empty($_COOKIE['edu_LOGIN']))){
-			echo $_COOKIE['edu_LOGIN'];
-		}else if ($_SESSION['loggedin']){
-			echo $_SESSION['username'];
-		}else{
-            echo "LoggedOut";
-        }
+		if ((isset($_POST['sessionid'])) && (!empty($_POST['sessionid']))){
+			if ($_POST['sessionid'] == $_SESSION['sessionid'])
+				echo "true";
+			else echo "false";
+		}
+
 
 
 ?>

@@ -1,12 +1,9 @@
 <?php
 	session_start();
-	if ((isset($_COOKIE['edu_LOGIN'])) && (!empty($_COOKIE['edu_LOGIN'])) || ($_SESSION['loggedin'] == true)){
-		setcookie('edu_LOGIN',"",time()-3600);
-		setcookie("edu_stats","",time()-3600);
-		unset($_SESSION['loggedin']);
-		
-		echo "Logged out!";
-	}else{
-		echo "Nothing happened!";
-	}
+	if (isset($_POST['sessionid']) && (!empty($_POST['sessionid']))){
+		if ($_SESSION['sessionid'] == $_POST['sessionid']){
+			session_destroy();
+ 		}
+ 		echo "Logged out";
+	}else echo "No session data sent";
 ?>

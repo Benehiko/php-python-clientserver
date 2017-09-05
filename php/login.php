@@ -29,8 +29,8 @@
 
                                 setcookie("sepam_LOGIN", $_POST['username'], time()+10800, '../');
                                 $_SESSION['loggedin'] = true;
-                                $_SESSION['username'] = $_POST['username'];
-                                echo "loggedin";
+                                $_SESSION['token'] = password_hash($_POST['username'], PASSWORD_BCRYPT);
+                                echo $_SESSION['token'];
 
 
                         }else{
@@ -42,7 +42,7 @@
 			}else echo "Login failed";
 
 		}else echo "Empty values given";
-		
+
 
 
 ?>
