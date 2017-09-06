@@ -1,9 +1,11 @@
 <?php
 ini_set('display_errors', 'On');
-session_start();
+require_once("dbhandler.php");
 
-		if ((isset($_POST['sessionid'])) && (!empty($_POST['sessionid']))){
-			if ($_POST['sessionid'] == $_SESSION['sessionid'])
+		if ((isset($_POST['id'])) && (!empty($_POST['id'])) && isset($_POST['token']) && (!empty($_POST['token']))){
+			$dbhandler = new dbhandler();
+			$msg = $dbhandler->verifyToken($_POST['id'], $_POST['token']);
+			if ($msg)
 				echo "true";
 			else echo "false";
 		}

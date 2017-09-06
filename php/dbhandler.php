@@ -121,14 +121,14 @@ class dbhandler
         $id = $mysqli->real_escape_string($userID);
         $t = $mysqli->real_escape_string($token);
 
-        if ($stmt = $mysqli->prepare("SELECT hash FROM user_data WHERE id =?")) {
+        if ($stmt = $mysqli->prepare("SELECT hash FROM user_data WHERE userdataID =?")) {
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $stmt->bind_result($hash);
             $stmt->fetch();
             $stmt->close();
 
-            if ($t == $hash) {
+            if ($token == $hash) {
                 return true;
             }
         }
@@ -173,6 +173,48 @@ class dbhandler
             }
         }
         return false;
+    }
+
+    function login($u,$p){
+        $mysqli = $this::$db->connect();
+
+        $username = $mysqli->real_escape_string($u);
+        $password = $mysqli->real_escape_string($p);
+
+        if (($stmt = $mysqli->prepare("SELECT password,id FROM user WHERE username = ?"))) {
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $stmt->bind_result($pass, $id);
+            $stmt->fetch();
+            $stmt->close();
+
+            if (($stmt = $mysqli->prepare("SELECT verified FROM user_data WHERE userdataID = ?"))) {
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $stmt->bind_result($verified);
+                $stmt->fetch();
+                $stmt->close();
+
+                if ($verified == 1) {
+                    if (password_verify($password, $pass)) {
+
+                        $token = password_hash($username, PASSWORD_BCRYPT);
+
+                        if (($stmt = $mysqli->prepare("UPDATE user_data SET hash = ? WHERE userdataID = ?"))){
+                            $stmt->bind_param("si",$token,$id);
+                            if ($stmt->execute()){
+                                $stmt->close();
+                                $data = array("token"=>$token,"id"=>$id);
+                                return $data;
+                            }
+                        }
+
+                    }else return "Login Failed";
+
+                }else return "Verify Email";
+            }
+
+        }
     }
 
     function registerUser($username, $password)

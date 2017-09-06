@@ -30,6 +30,7 @@ class Pyhandler:
     def login(self,username,password):
         data = {"username":username,"password":password}
         token = self.post("login.php", data)
+        print(token)
         if token != False:
             self.set_token(token)
             print("Logged in")
@@ -38,8 +39,11 @@ class Pyhandler:
         return False
 
     def session_check(self):
+        print(self.get_token())
         data = {"sessionid":self.get_token()}
-        if self.post("checklogin.php",data) == "true":
+        msg = self.post("checklogin.php",data)
+        print(msg)
+        if msg == "true":
             print("logged in")
             return True
         print("Not logged in")

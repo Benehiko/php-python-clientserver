@@ -1,43 +1,13 @@
 <?php
-	session_start();
-	require('dbconnect.php');
-	require('password.php');
+	require_once('dbhandler.php.php');
 
 	if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['username']) && !empty($_POST['password'])){
 
-			$db = new DBConnect();
-			$mysqli = $db->connect();
-			
-			if (($stmt = $mysqli->prepare("SELECT password,id FROM user WHERE username = ?"))) {
-				$stmt->bind_param("s",$_POST['username']);
-				$stmt->execute();
-				$stmt->bind_result($pass,$id);
-				$stmt->fetch();
-				$stmt->close();
-                //echo 'Password: '.password_hash($_POST['password'], PASSWORD_BCRYPT).'   =   '.$pass;
-
-				if (($stmt = $mysqli->prepare("SELECT verified FROM user_data WHERE userdataID = ?"))){
-					$stmt->bind_param("i", $id);
-					$stmt->execute();
-					$stmt->bind_result($verified);
-					$stmt->fetch();
-					$stmt->close();
-
-					if ($verified == 1){
-                        if (password_verify($_POST['password'], $pass)){
-
-                              //  setcookie("sepam_LOGIN", $_POST['username'], time()+10800, '../');
-                                $_SESSION['sessionid'] = password_hash($_POST['username'], PASSWORD_BCRYPT);
-                                echo $_SESSION['sessionid'];
-
-
-                        }else{
-                            echo "Login Failed";
-                        }
-					}else echo "Verify Email";
-				}
-
-			}else echo "Login failed";
+			$dbhandler = new dbhandler();
+			$msg = $dbhandler->login($_POST['username'],$_POST['password']);
+            if ($msg.is_array()){
+                echo json_encode($msg);
+            }else echo $msg;
 
 		}else echo "Empty values given";
 

@@ -7,7 +7,7 @@ test = Pyhandler()
 while True:
     selection = raw_input("1. Login\n2.Logout\n3.Check Login\n")
     if selection == "1":
-        test.login("alanopi.314@gmail.com","password")
+        test.login("alanopi.314@gmail.com","password1234")
 
     elif selection == "2":
         test.logout()
