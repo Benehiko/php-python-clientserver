@@ -128,11 +128,11 @@ class dbhandler
             $stmt->fetch();
             $stmt->close();
 
-            if ($token == $hash) {
+            if ($t == $hash) {
                 return true;
             }
         }
-        return false;
+        return "Token received: ".$t."\nToken from db ".$hash;
     }
 
     function updatePassword($token, $password)
@@ -206,7 +206,7 @@ class dbhandler
                                 $stmt->close();
                                 $data = array("token"=>$token,"id"=>$id);
                                 return $data;
-                            }
+                            }else return "Could not generate token";
                         }
 
                     }else return "Login Failed";

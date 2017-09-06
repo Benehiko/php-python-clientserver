@@ -7,7 +7,7 @@ require_once("dbhandler.php");
 			$msg = $dbhandler->verifyToken($_POST['id'], $_POST['token']);
 			if ($msg)
 				echo "true";
-			else echo "false";
+			else echo $msg;
 		}
 
 
