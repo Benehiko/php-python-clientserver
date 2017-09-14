@@ -26,7 +26,7 @@ class emailhandler
 
         //save hash
         $mysqli = $this::$mysqli;
-        if ($stmt = $mysqli->prepare("UPDATE user_data SET hash = ? WHERE id = ?")){
+        if ($stmt = $mysqli->prepare("UPDATE user_data SET hash = ? WHERE userdataID = ?")){
             $stmt->bind_param("si",$hash,$userID);
             $stmt->execute();
             $stmt->close();

@@ -1,5 +1,5 @@
 <?php
-    //ini_set('display_errors', 'On');
+    ini_set('display_errors', 'On');
 	require('dbhandler.php');
 	require('password.php');
 
@@ -11,9 +11,9 @@
       //$emailhandler = new emailhandler();
       $dbhandler = new dbhandler();
 
-      if (($msg = $dbhandler->registerUser($_POST['username'], $_POST['password']))) {
-          echo "User registered!";
-      }else{echo "User not registered ".$msg;}
+      if (($msg = $dbhandler->registerUser($_POST['username'], $_POST['password'])))
+          echo $msg;
+      else echo $msg;
   }else{echo "Nothing entered!";}
 
 ?>

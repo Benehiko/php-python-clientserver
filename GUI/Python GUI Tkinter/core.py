@@ -1,4 +1,4 @@
-import urllib2, requests
+import requests
 
 
 class Pyhandler:
@@ -7,8 +7,6 @@ class Pyhandler:
         self.token = ""
         self.id = ""
 
-    def get(self, file):
-        content = urllib2.urlopen(self.url + file)
 
     def post(self, file, data):
         newurl = self.url + file
@@ -21,6 +19,7 @@ class Pyhandler:
 
     def register(self, username, password):
         data = {"username": username, "password": password}
+        print(data)
         if self.post("register.php", data) == "true":
             print("Registration success")
             return True
@@ -29,13 +28,15 @@ class Pyhandler:
     def login(self, username, password):
         data = {"username": username, "password": password}
         return_data = self.post("login.php", data)
-        print(return_data)
-        if return_data != False:
+
+        if len(return_data) > 0:
             self.set_details(return_data)
             print("Logged in")
             return True
-        print("Could not login...")
-        return False
+        else:
+            print(return_data)
+            return False
+
 
     def session_check(self):
         data = self.get_details()

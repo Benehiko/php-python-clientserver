@@ -1,15 +1,15 @@
 <?php
 ini_set('display_errors', 'On');
+require_once("dbhandler.php");
 
-        session_start();
-	
-		if ((isset($_COOKIE['edu_LOGIN'])) && (!empty($_COOKIE['edu_LOGIN']))){
-			echo $_COOKIE['edu_LOGIN'];
-		}else if ($_SESSION['loggedin']){
-			echo $_SESSION['username'];
-		}else{
-            echo "LoggedOut";
-        }
+		if ((isset($_POST['id'])) && (!empty($_POST['id'])) && isset($_POST['token']) && (!empty($_POST['token']))){
+			$dbhandler = new dbhandler();
+			$msg = $dbhandler->verifyToken($_POST['id'], $_POST['token']);
+			if ($msg)
+				echo "true";
+			else echo $msg;
+		}
+
 
 
 ?>

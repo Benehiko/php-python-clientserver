@@ -3,9 +3,9 @@ ini_set('display_errors', 'On');
 
 class dbconnect{
 	//db name
-	private $db_name = "muteki";
-	private $db_username = "muteki-user";
-	private $db_pass = "r&eimA0JRna5";
+	private $db_name = "zangetsu";
+	private $db_username = "sepam";
+	private $db_pass = "cBxI0HU2a9uf";
   	private $db_ip = "localhost";
 
   public function connect(){
