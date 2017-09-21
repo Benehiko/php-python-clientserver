@@ -5,7 +5,7 @@ test = Pyhandler()
 #test.login("alanopi.314@gmail.com","password1234")
 
 while True:
-    selection = raw_input("1.Login\n2.Logout\n3.Check Login\n4.Register")
+    selection = input("1.Login\n2.Logout\n3.Check Login\n4.Register")
     if selection == "1":
         test.login("alanopi.314@gmail.com","password1234")
 
@@ -15,6 +15,6 @@ while True:
     elif selection == "3":
         test.session_check()
     elif selection == "4":
-        username = raw_input("Enter username: ")
-        password = raw_input("Enter password: ")
+        username = input("Enter username: ")
+        password = input("Enter password: ")
         test.register(username,password)
