@@ -60,6 +60,31 @@ class dbhandler
 
     }
 
+    function logout($i,$to){
+
+        $mysqli = $this::$db->connect();
+        $t = "";
+        $id = $mysqli->real_escape_string($i);
+        $token = $mysqli->real_escape_string($to);
+        if ($stmt = $mysqli->prepare("SELECT hash FROM user_data WHERE userdataID =?")){
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $stmt->bind_result($t);
+            $stmt->fetch();
+            $stmt->close();
+
+            if ($token == $t){
+                if($stmt = $mysqli->prepare("UPDATE user_data SET hash = ? WHERE userdataID = ?")){
+                    $t = "";
+                    $stmt->bind_param("si",$t,$id);
+                    $stmt->execute();
+                    $stmt->close();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     function resetUser($email)
     {
 
