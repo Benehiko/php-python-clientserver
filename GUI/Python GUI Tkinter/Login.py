@@ -1,6 +1,10 @@
 from tkinter import *
 from core import Pyhandler
 
+def getHomepage():
+    from Homepage import runHomepage
+    runHomepage()
+
 def runLogin():
     login = Tk()
 
