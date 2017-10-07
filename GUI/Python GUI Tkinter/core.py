@@ -65,3 +65,12 @@ class Pyhandler:
     def get_details(self):
         data = {"id": self.id, "token": self.token}
         return data
+
+
+    def get_data(self):
+        data = {"id": self.id, "token": self.token}
+        msg = self.post("userdata.php",data)
+        if msg != False:
+            data = msg
+            return data
+        return False
