@@ -6,7 +6,7 @@
 			$dbhandler = new dbhandler();
 			$msg = $dbhandler->login($_POST['username'],$_POST['password']);
             if (is_array($msg)){
-                echo json_encode($msg);
+                echo json_encode($msg,JSON_PRETTY_PRINT );
             }else echo $msg;
 
 		}else echo "Empty values given";
