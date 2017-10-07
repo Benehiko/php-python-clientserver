@@ -1,4 +1,4 @@
-import urllib2, requests
+import requests, json, simplejson
 
 
 class Pyhandler:
@@ -6,13 +6,19 @@ class Pyhandler:
         self.url = "http://sepam.anzen-learning.xyz/"
         self.token = ""
         self.id = ""
+        self.headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Connection": "keep-alive"
+        }
 
-    def get(self, file):
-        content = urllib2.urlopen(self.url + file)
+
 
     def post(self, file, data):
         newurl = self.url + file
-        r = requests.post(newurl, data)
+        r = requests.post(newurl, data, headers = self.headers)
         if r.status_code == 200:
             return r.text
         else:
@@ -21,6 +27,7 @@ class Pyhandler:
 
     def register(self, username, password):
         data = {"username": username, "password": password}
+        print(data)
         if self.post("register.php", data) == "true":
             print("Registration success")
             return True
@@ -29,13 +36,17 @@ class Pyhandler:
     def login(self, username, password):
         data = {"username": username, "password": password}
         return_data = self.post("login.php", data)
-        print(return_data)
-        if return_data != False:
-            self.set_details(return_data)
-            print("Logged in")
-            return True
-        print("Could not login...")
-        return False
+        if return_data == False:
+            return False
+        if len(return_data) > 0:
+             self.set_details(return_data)
+             print("Logged in")
+             print(self.get_token())
+             return True
+        else:
+             print(return_data)
+             return False
+
 
     def session_check(self):
         data = self.get_details()
@@ -48,17 +59,28 @@ class Pyhandler:
         return False
 
     def logout(self):
-        data = {"sessionid": self.get_token()}
-        if self.post("logout.php", data):
+        data = {"id":self.get_id(),"token": self.get_token()}
+        msg = self.post("logout.php", data)
+        if msg == "True":
             print("logged out")
             return True
+        else:
+            print(msg)
         print("something went wrong")
         return False
 
     def set_details(self, data):
-        self.token = data[0]
-        self.id = data[1]
+        print(data)
+        json_data = json.loads(data)
+        self.token = json_data["token"]
+        self.id = json_data["id"]
         return True
+
+    def get_token(self):
+        return self.token
+
+    def get_id(self):
+        return self.id
 
     def get_details(self):
         data = {"id": self.id, "token": self.token}
