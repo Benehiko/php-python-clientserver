@@ -24,6 +24,7 @@ class RoomManager
         $this::$roomName = $name;
     }
 
+<<<<<<< HEAD
     function getRoomID(){
         return $this::$roomID;
     }
@@ -47,4 +48,13 @@ class RoomManager
         $array_return = array("RoomID"=>$this->getRoomID(), "RoomName"=>getRoomName(), "Students"=>$this::$students);
         return json_encode($array_return,JSON_PRETTY_PRINT );
     }
+=======
+    function setStudents($student){
+        $s = new StudentManager();
+        $s.setUsername($student["Username"]);
+        $s.addCommit($student["Commit"]);
+
+        array_push($this::$students, $s);
+    }
+>>>>>>> v1.7.1
 }

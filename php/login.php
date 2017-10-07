@@ -15,8 +15,12 @@
 			$msg = $dbhandler->login($_POST['username'],$_POST['password']);
 			//Once the data is returned in variable msg, it is checked, as msg can be boolean or an array.
             if (is_array($msg)){
+<<<<<<< HEAD
                 //The data gets parsed back to the client posting the data as a JSON string.
             	echo json_encode($msg,JSON_PRETTY_PRINT );
+=======
+                echo json_encode($msg,JSON_PRETTY_PRINT );
+>>>>>>> v1.7.1
             }else echo $msg;
 
 		}else echo "Empty values given";
