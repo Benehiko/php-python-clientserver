@@ -71,9 +71,8 @@ class Pyhandler:
 
     def set_details(self, data):
         print(data)
-        json_data = json.dumps(data)
-        self.token = json_data["token"]
-        self.id = json_data["id"]
+        self.token = data.token
+        self.id = data.id
         return True
 
     def get_token(self):
@@ -85,3 +84,11 @@ class Pyhandler:
     def get_details(self):
         data = {"id": self.id, "token": self.token}
         return data
+
+    def get_data(self):
+        data = {"id": self.id, "token": self.token}
+        msg = self.post("userdata.php",data)
+        if msg != False:
+            data = msg
+            return data
+        return False
