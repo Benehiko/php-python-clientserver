@@ -13,8 +13,9 @@ def runLogin():
         password = E.get()
         userpass = (username, password)
         ph = Pyhandler()
-        ph.login(username, password)
-        print(userpass)
+        if ph.login(username, password):
+            print(userpass)
+            getHomepage()
         return userpass
 
     A = Label(login, text="Enter Username:", font="system 20")
