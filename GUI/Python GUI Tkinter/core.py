@@ -67,7 +67,7 @@ class Pyhandler:
 
     def set_details(self, data):
         print(data)
-        json_data = json.dumps(data)
+        json_data = json.loads(data)
         self.token = json_data["token"]
         self.id = json_data["id"]
         return True
