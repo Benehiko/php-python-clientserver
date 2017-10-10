@@ -39,6 +39,8 @@ class dbhandler
                 $stmt->bind_param("i",$groupID);
                 $stmt->execute();
                 $stmt->bind_result($gdescription);
+                $stmt->fetch();
+                $stmt->close();
 
                 if ($groupID == 1){
                     $data = getAdmin($id);
@@ -118,7 +120,7 @@ class dbhandler
                     }
 
                     $stmt->close();
-            }
+                }
 
                     if ($stmt_username = $mysqli->prepare("SELECT username FROM user WHERE userID =?")){
                         if ($stmt_commit = $mysqli->prepare("SELECT commitID, description, datetime FROM commit INNER JOIN commit_user ON commit.commitID = commit_user.commitID WHERE commit_user.userID = ?")){
