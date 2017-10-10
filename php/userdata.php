@@ -18,7 +18,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) && isset($_POST['token']) && !em
     }else{
         $data = "false";
     }
-    echo $data;
+    echo json_encode($data,JSON_PRETTY_PRINT);
 }else{
     echo "No data";
 }

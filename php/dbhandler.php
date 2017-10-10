@@ -22,34 +22,42 @@ class dbhandler
 
 
     function getData($id){
+        $AccountType = $this->checkAccountType($id);
+        if ($AccountType["GroupID"] == 1) {
+            $data = $this->getAdmin($id);
+        } else {
+            $data = $this->getStudent($id);
+        }
+        array_merge($AccountType,$data);
+        return $AccountType;
+    }
+
+    function checkAccountType($id){
         //Initialise Variables
-        $groupID = Null;
-        $gdescription = Null;
+        $groupID = null;
+        $gdescription = null;
         $data = null;
         //First check if student or admin
 
         $mysqli = $this::$db->connect();
-        if ($stmt = $mysqli->prepare("SELECT grouptID FROM user_group WHERE userID = ?")){
+
+        if ($stmt = $mysqli->prepare("SELECT groupID FROM user_group WHERE userID = ?")){
             $stmt->bind_param("i",$id);
             $stmt->execute();
             $stmt->bind_result($groupID);
             $stmt->fetch();
+            $stmt->close();
 
-            if ($stmt = $mysqli->prepare("SELECT description FROM group WHERE groupid = ?")){
+            if ($stmt = $mysqli->prepare("SELECT description FROM `group` WHERE groupID = ?")){
                 $stmt->bind_param("i",$groupID);
                 $stmt->execute();
                 $stmt->bind_result($gdescription);
                 $stmt->fetch();
                 $stmt->close();
-
-                if ($groupID == 1){
-                    $data = getAdmin($id);
-                }else{
-                    $data = getStudent($id);
-                }
+                $data = array("GroupID"=>$groupID, "GroupDescription"=>$gdescription);
                 return $data;
-            }
-        }
+            }else return "Could not get description";
+        }else return "Could not get groupID";
         return false;
     }
 
@@ -102,14 +110,14 @@ class dbhandler
 
             while ($stmt->fetch()){
                 $Rooms[$count] = new RoomManager();
-                $Rooms[$count].setRoomID($roomID);
-                $Rooms[$count].setRoomName($roomName);
+                $Rooms[$count]->setRoomID($roomID);
+                $Rooms[$count]->setRoomName($roomName);
                 $count++;
             }
             $stmt->close();
 
-            for ($k=0;$k<=$count;$k++){
-                $roomID = $Rooms[$k].getRoomID();
+            foreach ($Rooms as $room){
+                $roomID = $room->getRoomID();
                 if ($stmt = $mysqli->prepare("SELECT userID FROM room_user WHERE roomID = ?")) {
                     $stmt->bind_param("i", $roomID);
                     $stmt->execute();
@@ -117,6 +125,7 @@ class dbhandler
                     $i = 0;
                     while ($stmt->fetch()){
                         $users[$i] = $userID;
+                        $i++;
                     }
 
                     $stmt->close();
@@ -138,7 +147,7 @@ class dbhandler
                                 $stmt_commit->fetch();
 
                                 $student = array("Username"=>$username,"CommitID"=>$commitID,"CommitDescription"=>$commitDescription,"CommitDateTime"=>$commitDatetime);
-                                $Rooms[$k].addStudent($student);
+                                $room->addStudent($student);
                             }
                             $stmt_username->close();
                             $stmt_commit->close();
@@ -147,7 +156,7 @@ class dbhandler
             }
 
             $data = array("Usertype"=>"Admin","Username"=>$this::getUsername($id),"Rooms"=>$Rooms);
-            return json_encode($data,JSON_PRETTY_PRINT);
+            return $data;
         }
         return false;
     }
@@ -405,40 +414,58 @@ class dbhandler
         $username = $mysqli->real_escape_string($u);
         $password = $mysqli->real_escape_string($p);
 
-        if (($stmt = $mysqli->prepare("SELECT password,id FROM user WHERE username = ?"))) {
+        if ($stmt = $mysqli->prepare("SELECT COUNT(*) FROM user WHERE username = ?")) {
             $stmt->bind_param("s", $username);
             $stmt->execute();
-            $stmt->bind_result($pass, $id);
+            $stmt->bind_result($result);
             $stmt->fetch();
             $stmt->close();
 
-            if (($stmt = $mysqli->prepare("SELECT verified FROM user_data WHERE userdataID = ?"))) {
-                $stmt->bind_param("i", $id);
-                $stmt->execute();
-                $stmt->bind_result($verified);
-                $stmt->fetch();
-                $stmt->close();
+            if ($result == 1) {
+                if (($stmt = $mysqli->prepare("SELECT password,id FROM user WHERE username = ?"))) {
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+                    $stmt->bind_result($pass, $id);
+                    $stmt->fetch();
+                    $stmt->close();
 
-                if ($verified == 1) {
-                    if (password_verify($password, $pass)) {
+                    if (($stmt = $mysqli->prepare("SELECT verified FROM user_data WHERE userdataID = ?"))) {
+                        $stmt->bind_param("i", $id);
+                        $stmt->execute();
+                        $stmt->bind_result($verified);
+                        $stmt->fetch();
+                        $stmt->close();
 
-                        $token = password_hash($username, PASSWORD_BCRYPT);
+                        if ($verified == 1) {
+                            if (password_verify($password, $pass)) {
 
-                        if (($stmt = $mysqli->prepare("UPDATE user_data SET hash = ? WHERE userdataID = ?"))){
-                            $stmt->bind_param("si",$token,$id);
-                            if ($stmt->execute()){
-                                $stmt->close();
-                                $data = array("token"=>$token,"id"=>$id);
-                                return $data;
-                            }else return "Could not generate token";
-                        }
+                                $token = password_hash($username, PASSWORD_BCRYPT);
 
-                    }else return "Login Failed";
+                                if (($stmt = $mysqli->prepare("UPDATE user_data SET hash = ? WHERE userdataID = ?"))) {
+                                    $stmt->bind_param("si", $token, $id);
+                                    if ($stmt->execute()){
+                                        $stmt->close();
+                                        $data = array("token" => $token, "id" => $id);
+                                        $data2 = $this->checkAccountType($id);
+                                        try{
+                                            $final = array_merge($data2,$data);
+                                            return $final;
+                                        }catch(Exception $e){
+                                            log($e->getMessage());
+                                            return "Account type mishap";
+                                        }
+                                    }else return "Could not generate token";
+                                }
 
-                }else return "Verify Email";
-            }
+                            }else return "Login Failed";
 
+                        }else return "Verify Email";
+                    }
+
+                }
+            }else return "User does not exist";
         }
+        return false;
     }
 
     function registerUser($username, $password)
@@ -453,6 +480,13 @@ class dbhandler
 
         $verified = 0;
         $hash = 0;
+        $id = 0;
+        $groupID = 2;
+        if (strtolower(substr($user,strpos("@", $user),strlen($user)) ==  "@monash.edu")){
+            $groupID = 1;
+        }else{
+            $groupID = 2;
+        }
 
         if ($stmt = $mysqli->prepare("SELECT COUNT(*) FROM user WHERE username = ?")) {
             $stmt->bind_param("s", $user);
@@ -472,27 +506,35 @@ class dbhandler
                                 $stmt->bind_result($id);
                                 $stmt->fetch();
                                 $stmt->close();
-                                if ($stmt = $mysqli->prepare("INSERT INTO user_data(userdataID,verified,hash) VALUES(?,?,?)")) {
+                                if ($stmt = $mysqli->prepare("INSERT INTO user_data VALUES(?,?,?)")) {
                                     $stmt->bind_param("iis", $id,$verified,$hash);
                                     if ($stmt->execute()) {
                                         $stmt->close();
 
-                                        if (($hash = $emailHandler->sendVerification($id, $user)) != false) {
+                                        if ($stmt = $mysqli->prepare("INSERT INTO user_group(groupID, userID) VALUES(?,?)")) {
+                                            $stmt->bind_param("ii", $groupID, $id);
+                                            if ($stmt->execute()) {
+                                                $stmt->close();
 
-                                            $msg = "Your account was successfully created!\n" .
-                                                "Here are your account details:" .
-                                                "\nUsername: " . $user .
-                                                "\nAccount Activation Link: http://sepam.anzen-learning.xyz/verify.php?v=" . $hash . "&id=" . $id .
-                                                "\n*Notice: According to the Protection of Personal Information Act (POPI) we are not allowed to view your password or email address.\n" .
-                                                "Your password is encrypted on the database. All emails concerning your account was automatically generated.";
-                                            $subject = "User " . $user . " registered!";
 
-                                            if ($emailHandler->sendEmail($user, $msg, $subject))
-                                                return true;
-                                            else return "Email could not be sent";
+                                                if (($hash = $emailHandler->sendVerification($id, $user)) != false) {
 
-                                        }
-                                    }return "Could not complete registration";
+                                                    $msg = "Your account was successfully created!\n" .
+                                                        "Here are your account details:" .
+                                                        "\nUsername: " . $user .
+                                                        "\nAccount Activation Link: http://sepam.anzen-learning.xyz/verify.php?v=" . $hash . "&id=" . $id .
+                                                        "\n*Notice: According to the Protection of Personal Information Act (POPI) we are not allowed to view your password or email address.\n" .
+                                                        "Your password is encrypted on the database. All emails concerning your account was automatically generated.";
+                                                    $subject = "User " . $user . " registered!";
+
+                                                    if ($emailHandler->sendEmail($user, $msg, $subject))
+                                                        return true;
+                                                    else return "Email could not be sent";
+
+                                                }else return "No email was sent";
+                                            }else return "Could not add user group";
+                                        }else return "Could not add user group";
+                                    }else return "Could not complete registration";
                                 }
 
                             }
@@ -503,6 +545,47 @@ class dbhandler
                 }
             }else return "User exists";
         }
-        return "False";
+        return false;
+    }
+
+    function createRoom($ownerID, $roomName){
+        $mysqli = $this::$db->connect();
+        $ownr = $mysqli->real_escape_string($ownerID);
+        $rmN = $mysqli->real_escape_string($roomName);
+
+        if ($stmt = $mysqli->prepare("INSERT INTO room VALUES(?,?)")){
+            $stmt->bind_param("is",$ownr, $rmN);
+            try{
+                $stmt->execute();
+            }catch(Exception $e){
+                return $e->getMessage();
+            }
+            return true;
+        }else return "Could not insert into room";
+        return false;
+    }
+
+    function addUserRoom($roomID, $users){
+        $mysqli = $this::$db->connect();
+        for ($k=0; $k<=len($users); $k++) {
+            if ($stmt = $mysqli->prepare("INSERT INTO room_user VALUES (?,?)")) {
+                $stmt->bind_param("ii", $roomID, $userID);
+                $stmt->execute();
+                $stmt->close();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function removeUserRoom($roomID, $userID){
+        $mysqli = $this::$db->connect();
+
+        if ($stmt = $mysqli->prepare("DELETE FROM room_user WHERE userID = ? AND roomID = ?")){
+            $stmt->bind_param("ii",$userID,$roomID);
+            $stmt->execute();
+            return true;
+        }
+        return false;
     }
 }

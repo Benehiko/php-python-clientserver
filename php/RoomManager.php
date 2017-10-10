@@ -19,6 +19,9 @@ class RoomManager
     function setRoomID($id){
         $this::$roomID = $id;
     }
+    function getRoomID(){
+        $this::$roomID;
+    }
 
     function setRoomName($name){
         $this::$roomName = $name;

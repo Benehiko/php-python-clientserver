@@ -34,9 +34,7 @@ class emailhandler
             //return hash
             return $hash;
         }
-
         return false;
-
     }
 
     function sendEmail($username, $msg, $subject){

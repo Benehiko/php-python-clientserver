@@ -11,9 +11,7 @@
       //$emailhandler = new emailhandler();
       $dbhandler = new dbhandler();
 
-      if (($msg = $dbhandler->registerUser($_POST['username'], $_POST['password'])))
-          echo $msg;
-      else echo $msg;
+      echo $msg = $dbhandler->registerUser($_POST['username'], $_POST['password']);
   }else{echo "Nothing entered!";}
 
 ?>
