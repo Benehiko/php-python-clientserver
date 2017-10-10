@@ -16,7 +16,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) && isset($_POST['token']) && !em
         $id = $_POST['id'];
         $data = $dbhandler->getData($id);
     }else{
-        $data = false;
+        $data = "false";
     }
     echo $data;
 }else{

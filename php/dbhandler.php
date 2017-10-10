@@ -283,6 +283,7 @@ class dbhandler
         }
         return false;
     }
+
     function resetUser($email)
     {
 
@@ -355,7 +356,7 @@ class dbhandler
                 return true;
             }
         }
-        return "Token received: ".$t."\nToken from db ".$hash;
+        return false;
     }
 
     function updatePassword($token, $password)
