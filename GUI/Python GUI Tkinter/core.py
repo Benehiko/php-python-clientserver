@@ -51,19 +51,21 @@ class Pyhandler:
     #Login - ensures that we can retrieve a token (for session) from the server. This token is destroyed once the
     #application is closed. It gets created server side.
     def login(self, username, password):
-        data = {"username": username, "password": password}
-        return_data = self.post("login.php", data)
-        try:
-            self.set_details(return_data)
-            print("Logged in\nID: ", str(self.id), "\nToken: ", str(self.token))
-            return True
-        except ValueError:
-            print(return_data)
-        # if len(return_data) > 0:
-        #
-        # else:
-        #     print(return_data)
-        #     return False
+        if not self.session_check():
+            data = {"username": username, "password": password}
+            return_data = self.post("login.php", data)
+            try:
+                self.set_details(return_data)
+                print("Logged in\nID: ", str(self.id), "\nToken: ", str(self.token))
+                return True
+            except ValueError:
+                print(return_data)
+        return True
+            # if len(return_data) > 0:
+            #
+            # else:
+            #     print(return_data)
+            #     return False
 
     #Session_check Called everytime an action gets called which requires the user to be logged in.
     #This function is only for validating client side token data with the server.
@@ -113,6 +115,10 @@ class Pyhandler:
     def get_id(self):
         return self.id
 
+    #get groupID for this user
+    def get_groupID(self):
+        return self.AccountTypeID
+
     #get_data is for getting the current user data - does not matter if user is student or admin.
     def get_data(self):
         data = {"id": self.id, "token": self.token}
@@ -131,26 +137,47 @@ class Pyhandler:
 
     #create_room will create a room for users to be added in for their project. It only needs the room name as the
     #"data" parameter
-    def create_room(self, data):
+    def create_room(self, roomname):
         if (self.session_check()):
-            room_details = {"Action": "CreateRoom", "roomName":data,"ownerID":self.get_id()}
+            room_details = {"Action": "CreateRoom", "roomName":roomname,"ownerID":self.get_id()}
             msg = self.post("datahandler.php",room_details)
             if msg == "1":
-                print("Room with name: ",data," created")
+                print("Room with name: ",roomname," created")
+                print(msg)
                 return True
             print(msg)
         return False
 
-    def add_user_room(self, arrUser, roomID):
+    def add_user_room(self, userID, roomID):
         if (self.session_check()):
-            data = {"Action":"AddUserRoom","roomID": roomID, "Users": arrUser}
-            if self.post("datahandler.php", data):
+            data = {"Action":"AddUserRoom","roomID": roomID, "UserID": userID}
+            if self.post("datahandler.php", data) == "1":
+                print("User added to room ",roomID)
                 return True
         return False
+
+    def add_mark(self,userID, mark):
+        if (self.session_check()):
+            data = {"Action":"AddMarks","userID":userID,"mark":mark}
+            msg = self.post("datahandler.php", data)
+            if msg == "1":
+                print("User mark was added")
+                return True
+            print(msg)
+            return False
 
     def remove_user(self, userID, roomID):
         if self.session_check():
             data = {"Action": "RemoveUser", "UserID":userID, "roomID":roomID}
             if self.post("datahandler.php",data):
+                return True
+        return False
+
+    def commit_data(self, userID, roomID, comment, description):
+        if self.session_check():
+            data = {"Action":"CommitData", "userID":userID, "roomID":roomID, "comment" : comment, "description": description}
+            msg = self.post("datahandler.php",data)
+            if  msg == "1":
+                print(msg)
                 return True
         return False

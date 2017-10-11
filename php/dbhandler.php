@@ -8,6 +8,7 @@
 
 require('dbconnect.php');
 require('emailhandler.php');
+require('RoomManager.php');
 ini_set('display_errors', 'On');
 
 class dbhandler
@@ -22,14 +23,17 @@ class dbhandler
 
 
     function getData($id){
+        $data = array();
+        $final = null;
         $AccountType = $this->checkAccountType($id);
-        if ($AccountType["GroupID"] == 1) {
+
+        if ($AccountType["GroupID"] == "1") {
             $data = $this->getAdmin($id);
         } else {
             $data = $this->getStudent($id);
         }
-        array_merge($AccountType,$data);
-        return $AccountType;
+        $final = array("UserDetails"=>$AccountType,"RoomDetails"=>$data);
+        return $final;
     }
 
     function checkAccountType($id){
@@ -75,7 +79,153 @@ class dbhandler
         return false;
     }
 
-    function getAdmin($id){
+    function getRooms($id, $mysqli)
+    {
+        $roomID = null;
+        $roomName = null;
+        $rooms = array();
+
+        if ($stmt = $mysqli->prepare("SELECT room.roomID, room.roomName FROM room INNER JOIN room_user ON room_user.userID = room_user.userID WHERE userID = ?;")) {
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $stmt->bind_result($roomID, $roomName);
+
+            while ($stmt->fetch()) {
+                array_push($rooms,array("RoomID"=>$roomID,"RoomName"=>$roomName));
+            }
+            $stmt->close();
+
+            return $rooms;
+        }
+    }
+
+    function getStudentIDRoom($Rooms, $mysqli){
+        $userID = null;
+        $students = array();
+        $final = array();
+        $roomID = null;
+        $temp = array();
+
+        foreach ($Rooms as $room){
+            $roomID = $room["RoomID"];
+            if ($stmt = $mysqli->prepare("SELECT userID FROM room_user WHERE roomID = ?")){
+                $stmt->bind_param("i",$roomID);
+                $stmt->execute();
+                $stmt->bind_result($userID);
+                while ($stmt->fetch()){
+
+                    $data = $this->getStudentData($userID);
+                    $student = array("UserID"=>$userID);
+                    if (is_array($data)){
+                        $temp = array_merge($student, $data);
+                    }else{
+                        return array("Data"=>$data);
+                    }
+                    array_push($students,$temp);
+                }
+            }
+            $roomarr = array("RoomID"=>$room["RoomID"],"RoomName"=>$room["RoomName"], "Students"=>$students);
+            array_push($final, $roomarr);
+        }
+        return $final;
+    }
+
+    function getStudentMarks($id){
+
+        $mysqli = $this::$db->connect();
+        $mark = null;
+
+        if ($stmt = $mysqli->prepare("SELECT mark FROM user_marks WHERE userID = ?")){
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $stmt->bind_result($mark);
+            $stmt->fetch();
+            $stmt->close();
+
+            $mysqli->close();
+
+        }
+        return $mark;
+    }
+    function getStudentData($id)
+    {
+        $mysqli = $this::$db->connect();
+        $student = array();
+        $userID = null;
+        $commitID = null;
+        $commitDescription = null;
+        $commitDatetime = null;
+        $commits = array();
+        $username = null;
+
+        $mark = $this->getStudentMarks($id);
+        if ($stmt = $mysqli->prepare("SELECT username FROM user WHERE id =?")) {
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $stmt->bind_result($username);
+            $stmt->fetch();
+            $stmt->close();
+
+            if ($stmt = $mysqli->prepare("SELECT commitID FROM commit_user WHERE userID = ?")) {
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $stmt->bind_result($commitID);
+                while ($stmt->fetch()) {
+                    if ($stmt2 = $mysqli->prepare("SELECT description, datetime FROM `commit` WHERE commitID = ?")) {
+                        $stmt2->bind_param("i", $commitID);
+                        $stmt2->execute();
+                        $stmt2->bind_result($commitDescription, $commitDatetime);
+                        array_push($commits, array("CommitID" => $commitID, "CommitDescription" => $commitDescription, "CommitDateTime" => $commitDatetime));
+                        $stmt2->close();
+                    }
+                }
+                $stmt->close();
+
+                $student = array("Username" => $username, "Mark"=>$mark, "Commits" => $commits);
+
+                }else return "Cannot get commits";
+            }else return "Cannot get Username";
+        return $student;
+    }
+
+    function getStudents($students){
+        $mysqli = $this::$db->connect();
+
+        $student = array();
+        $userID = null;
+        $commitID = null;
+        $commitDescription = null;
+        $commitDatetime = null;
+        $final = array();
+
+
+        if ($stmt_username = $mysqli->prepare("SELECT username FROM user WHERE userID =?")){
+            if ($stmt_commit = $mysqli->prepare("SELECT `commit`.`commitID`, `commit`.`description`, `commit`.`datetime` FROM `commit` INNER JOIN `commit_user` ON `commit`.`commitID` = `commit_user`.`commitID` WHERE `commit_user`.`userID` = ?")){
+                foreach ($students as $user){
+                    $stmt_username->bind_param("i",$user["UserID"]);
+                    $stmt_username->execute();
+                    $stmt_username->bind_result($username);
+                    $stmt_username->fetch();
+
+
+                    $stmt_commit->bind_param("i",$user["UserID"]);
+                    $stmt_commit->execute();
+                    $stmt_commit->bind_result($commitID,$commitDescription,$commitDatetime);
+                    $stmt_commit->fetch();
+
+                    $student = array("Username"=>$username,"CommitID"=>$commitID,"CommitDescription"=>$commitDescription,"CommitDateTime"=>$commitDatetime);
+                    array_push($final, $student);
+
+                }
+                $stmt_username->close();
+                $stmt_commit->close();
+            }else return "Could not get user data";
+        }else return "Could not get username";
+        return $final;
+    }
+
+    function getAdmin($id)
+    {
         /* Admin data consists of:
          *  1. Rooms + Room Data
          *  2. Students in each room
@@ -84,85 +234,20 @@ class dbhandler
          *  5. Student Marks
          *  6.
          */
-
-        //Initialise Variablese
-        $roomID = Null;
-        $roomName = NUll;
-        $users = Null;
-        $username = Null;
-        $commitID = Null;
-        $commitDatetime = Null;
-        $commitDescription = Null;
-        $count = 0;
-        $student = array();
-
-        //Firstly the admin needs the rooms and the studends belonging to each room.
-        //A 2D array needs to be made or an Object containing an Array of students for each room.
-
-        $Rooms = array();
-
-        //Connect to Database
         $mysqli = $this::$db->connect();
+        $rooms = $this->getRooms($id, $mysqli);
+        $students = $this->getStudentIDRoom($rooms, $mysqli);
+        $mysqli->close();
+        //$arr_students = $this->getStudents($students);
+        return $students;
 
-        if ($stmt = $mysqli->prepare("SELECT roomID, roomName FROM room")){
-            $stmt->execute();
-            $stmt->bind_result($roomID,$roomName);
-
-            while ($stmt->fetch()){
-                $Rooms[$count] = new RoomManager();
-                $Rooms[$count]->setRoomID($roomID);
-                $Rooms[$count]->setRoomName($roomName);
-                $count++;
-            }
-            $stmt->close();
-
-            foreach ($Rooms as $room){
-                $roomID = $room->getRoomID();
-                if ($stmt = $mysqli->prepare("SELECT userID FROM room_user WHERE roomID = ?")) {
-                    $stmt->bind_param("i", $roomID);
-                    $stmt->execute();
-                    $stmt->bind_result($userID);
-                    $i = 0;
-                    while ($stmt->fetch()){
-                        $users[$i] = $userID;
-                        $i++;
-                    }
-
-                    $stmt->close();
-                }
-
-                    if ($stmt_username = $mysqli->prepare("SELECT username FROM user WHERE userID =?")){
-                        if ($stmt_commit = $mysqli->prepare("SELECT commitID, description, datetime FROM commit INNER JOIN commit_user ON commit.commitID = commit_user.commitID WHERE commit_user.userID = ?")){
-
-                            for ($x=0;$x<=len($users);$x++){
-                                $stmt_username->bind_param("i",$users[$x]);
-                                $stmt_username->execute();
-                                $stmt_username->bind_result($username);
-                                $stmt_username->fetch();
-
-
-                                $stmt_commit->bind_param("i",$users[$x]);
-                                $stmt_commit->execute();
-                                $stmt_commit->bind_result($commitID,$commitDescription,$commitDatetime);
-                                $stmt_commit->fetch();
-
-                                $student = array("Username"=>$username,"CommitID"=>$commitID,"CommitDescription"=>$commitDescription,"CommitDateTime"=>$commitDatetime);
-                                $room->addStudent($student);
-                            }
-                            $stmt_username->close();
-                            $stmt_commit->close();
-                        }
-                    }
-            }
-
-            $data = array("Usertype"=>"Admin","Username"=>$this::getUsername($id),"Rooms"=>$Rooms);
-            return $data;
-        }
-        return false;
     }
 
     function getStudent($id){
-
+        $mysqli = $this::$db->connect();
+        $rooms = $this->getRooms($id,$mysqli);
+        $students = $this->getStudentIDRoom($rooms,$mysqli);
+       return $students;
     }
 
     function getArray($stmt){
@@ -252,6 +337,7 @@ class dbhandler
                                 $stmt->bind_param("ii", $verified, $id);
                                 if ($stmt->execute()) {
                                     $stmt->close();
+                                    $mysqli->close();
                                     return true;
                                 }else return "Could not update verified";
                             }
@@ -286,6 +372,7 @@ class dbhandler
                     $stmt->bind_param("si",$t,$id);
                     $stmt->execute();
                     $stmt->close();
+                    $mysqli->close();
                     return true;
                 }
             }
@@ -362,6 +449,7 @@ class dbhandler
             $stmt->close();
 
             if ($t == $hash) {
+                $mysqli->close();
                 return true;
             }
         }
@@ -449,6 +537,7 @@ class dbhandler
                                         $data2 = $this->checkAccountType($id);
                                         try{
                                             $final = array_merge($data2,$data);
+                                            $mysqli->close();
                                             return $final;
                                         }catch(Exception $e){
                                             log($e->getMessage());
@@ -527,9 +616,10 @@ class dbhandler
                                                         "Your password is encrypted on the database. All emails concerning your account was automatically generated.";
                                                     $subject = "User " . $user . " registered!";
 
-                                                    if ($emailHandler->sendEmail($user, $msg, $subject))
+                                                    if ($emailHandler->sendEmail($user, $msg, $subject)) {
+                                                        $mysqli->close();
                                                         return true;
-                                                    else return "Email could not be sent";
+                                                    }else return "Email could not be sent";
 
                                                 }else return "No email was sent";
                                             }else return "Could not add user group";
@@ -550,31 +640,47 @@ class dbhandler
 
     function createRoom($ownerID, $roomName){
         $mysqli = $this::$db->connect();
-        $ownr = $mysqli->real_escape_string($ownerID);
-        $rmN = $mysqli->real_escape_string($roomName);
+        $owner = $mysqli->real_escape_string($ownerID);
+        $rName = $mysqli->real_escape_string($roomName);
+        $roomID = null;
+        $accounttype = $this->checkAccountType($ownerID);
+        if ($accounttype["GroupID"] == "1") {
+            if ($stmt = $mysqli->prepare("INSERT INTO room(roomName) VALUES(?)")) {
+                $stmt->bind_param("s", $rName);
+                if ($stmt->execute()) {
+                    $stmt->close();
+                    if ($stmt = $mysqli->prepare("SELECT roomID FROM room WHERE roomName = ?")) {
+                        $stmt->bind_param("i", $rName);
+                        $stmt->execute();
+                        $stmt->bind_result($roomID);
+                        $stmt->fetch();
+                        $stmt->close();
 
-        if ($stmt = $mysqli->prepare("INSERT INTO room VALUES(?,?)")){
-            $stmt->bind_param("is",$ownr, $rmN);
-            try{
-                $stmt->execute();
-            }catch(Exception $e){
-                return $e->getMessage();
-            }
-            return true;
-        }else return "Could not insert into room";
+                        if ($stmt = $mysqli->prepare("INSERT INTO room_user(roomID, userID) VALUES(?,?)")) {
+                            $stmt->bind_param("ii", $roomID, $owner);
+                            if ($stmt->execute()) {
+                                $stmt->close();
+                                $mysqli->close();
+                                return true;
+                            } else return "Could not complete.";
+                        } else return "Could not complete room creation";
+                    } else return "Could not get Room ID";
+                } else return "Room already exists.";
+            } else return "Could not insert into room";
+        }else return "You do not have access to this command";
         return false;
     }
 
-    function addUserRoom($roomID, $users){
+    function addUserRoom($roomID, $userID){
         $mysqli = $this::$db->connect();
-        for ($k=0; $k<=len($users); $k++) {
-            if ($stmt = $mysqli->prepare("INSERT INTO room_user VALUES (?,?)")) {
+
+        if ($stmt = $mysqli->prepare("INSERT INTO room_user(roomID, userID) VALUES (?,?)")) {
                 $stmt->bind_param("ii", $roomID, $userID);
                 $stmt->execute();
                 $stmt->close();
+                $mysqli->close();
                 return true;
             }
-        }
         return false;
     }
 
@@ -587,5 +693,50 @@ class dbhandler
             return true;
         }
         return false;
+    }
+
+    function addMarks($userID, $mark){
+        $mysqli = $this::$db->connect();
+
+        if ($stmt = $mysqli->prepare("INSERT INTO user_marks(userID, mark) VALUES(?,?)")){
+            $stmt->bind_param("ii",$userID,$mark);
+            $stmt->execute();
+            return true;
+        }else return "Cannot insert mark";
+        return false;
+    }
+
+    function commitdata($id, $roomid, $msg, $description){
+        $mysqli = $this::$db->connect();
+
+        $commitID = null;
+
+
+        if ($stmt = $mysqli->prepare("INSERT INTO room_data(roomID,userID_fk,comments) VALUES(?,?,?)")){
+            $stmt->bind_param("iis",$roomid,$id,$msg);
+            $stmt->execute();
+            $stmt->close();
+
+            if ($stmt = $mysqli->prepare("INSERT INTO `commit`(datetime,description) VALUES(NOW(),?)")){
+                $stmt->bind_param("s",$description);
+                $stmt->execute();
+                $stmt->close();
+
+                if ($stmt = $mysqli->prepare("SELECT commitID FROM `commit` ORDER BY commitID DESC LIMIT 1")){
+                    $stmt->bind_result($commitID);
+                    $stmt->fetch();
+                    $stmt->close();
+                }
+                    if ($stmt = $mysqli->prepare("INSERT INTO commit_user(userID,commitID) VALUES(?,?)")){
+                        $stmt->bind_param("ii",$userID,$commitID);
+                        $stmt->execute();
+                        $stmt->close();
+                        return true;
+                    }
+
+
+
+            }
+        }
     }
 }
