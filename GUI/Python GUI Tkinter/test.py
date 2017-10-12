@@ -19,7 +19,7 @@ def login_selection():
         elif loginselect == "3":
             test.add_user_room(60,53)
         elif loginselect == "4":
-            test.add_mark(60,40)
+            test.add_mark(58,40)
         elif loginselect == "5":
             data = json.loads(test.get_data())
             print(data)
