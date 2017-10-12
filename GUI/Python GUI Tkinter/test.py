@@ -17,16 +17,23 @@ def login_selection():
         elif loginselect == "2":
             list_rooms()
         elif loginselect == "3":
-            test.add_user_room(60,51)
+            test.add_user_room(60,53)
         elif loginselect == "4":
             test.add_mark(60,40)
         elif loginselect == "5":
             data = json.loads(test.get_data())
+            print(data)
+            temp = data['RoomDetails']
             userID = test.get_id()
-            roomID = data["RoomDetails"]["RoomID"]
+            roomID = temp[0]['RoomID']
             comment = "This is a test comment"
             description = "This is a test comment"
-            test.commit_data(userID,roomID,comment,description)
+            msg = test.commit_data(userID,roomID,comment,description)
+            if msg == "1":
+                print("Commit Completed")
+            else:
+                print(msg)
+
         elif loginselect == "6":
             main_menu()
 
@@ -38,7 +45,7 @@ def list_rooms():
     data = test.get_data()
     jsondata = json.loads(data)
     #rooms = jsondata["Rooms"]
-    print(jsondata)
+    print(data)
 
 def main_menu():
     while True:

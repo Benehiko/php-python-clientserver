@@ -29,6 +29,13 @@ require_once('dbhandler.php');
         echo $dbhandler->addMarks($userID,$mark);
         
     }elseif ($_POST['Action'] == 'CommitData') {
+        $userID = $_POST['userID'];
+        $roomID = $_POST['roomID'];
+        $comment = $_POST['comment'];
+        $description = $_POST['description'];
+        $dbhandler = new dbhandler();
+
+        echo $dbhandler->commitdata($userID,$roomID,$comment,$description);
 
     }elseif(isset($_POST['id']) && !empty($_POST['id']) && isset($_POST['file']) && !empty($_POST['file'])){
 

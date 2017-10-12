@@ -147,6 +147,25 @@ class dbhandler
         }
         return $mark;
     }
+
+    function getStudentMessages($id){
+         $mysqli = $this::$db->connect();
+         $comment = null;
+         $comments = array();
+
+         if ($stmt = $mysqli->prepare("SELECT `comments` FROM `room_data` WHERE `userID_fk` = ?")){
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $stmt->bind_result($comment);
+            while ($stmt->fetch()) {
+                array_push($comments, $comment);
+            }
+            $stmt->close();
+            $mysqli->close();
+            return $comments;
+         } 
+    }
+
     function getStudentData($id)
     {
         $mysqli = $this::$db->connect();
@@ -171,7 +190,7 @@ class dbhandler
                 $stmt->execute();
                 $stmt->bind_result($commitID);
                 while ($stmt->fetch()) {
-                    if ($stmt2 = $mysqli->prepare("SELECT description, datetime FROM `commit` WHERE commitID = ?")) {
+                    if ($stmt2 = $mysqli->prepare("SELECT description, `datetime` FROM `commit` WHERE commitID = ?")) {
                         $stmt2->bind_param("i", $commitID);
                         $stmt2->execute();
                         $stmt2->bind_result($commitDescription, $commitDatetime);
@@ -180,8 +199,8 @@ class dbhandler
                     }
                 }
                 $stmt->close();
-
-                $student = array("Username" => $username, "Mark"=>$mark, "Commits" => $commits);
+                $comments = $this->getStudentMessages($userID);
+                $student = array("Username" => $username, "Mark"=>$mark, "Commits" => $commits, "Comments"=>$comments);
 
                 }else return "Cannot get commits";
             }else return "Cannot get Username";
@@ -727,16 +746,14 @@ class dbhandler
                     $stmt->fetch();
                     $stmt->close();
                 }
-                    if ($stmt = $mysqli->prepare("INSERT INTO commit_user(userID,commitID) VALUES(?,?)")){
-                        $stmt->bind_param("ii",$userID,$commitID);
+                    if ($stmt = $mysqli->prepare("INSERT INTO commit_user(commitID,userID) VALUES(?,?)")){
+                        $stmt->bind_param("ii",$commitID,$id);
                         $stmt->execute();
                         $stmt->close();
                         return true;
                     }
-
-
-
             }
         }
+        return false;
     }
 }
