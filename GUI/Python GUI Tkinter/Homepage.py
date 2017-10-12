@@ -20,7 +20,7 @@ def runHomepage():
     frame2 = Frame(homepage)
     frame2.pack()
     frame3 = Frame(homepage)
-    frame3.pack()
+    frame3.pack(ipady=20)
     frame4 = Frame(homepage)
     frame4.pack()
 
