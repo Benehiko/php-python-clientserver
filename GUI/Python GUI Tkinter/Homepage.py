@@ -1,12 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
-
+from PIL import Image,ImageTk
 
 
 
 def runHomepage():
     homepage = Tk()
-    homepage.title("Student view")
+    homepage.title("Homepage")
     homepage.geometry("1000x700")
 
     def commentsubmitted():
@@ -14,6 +14,12 @@ def runHomepage():
         J.insert(0, comment)
         messagebox.showinfo("Comment", "Your comment has been submitted")
 
+    background_image = Image.open('EG_Logo.jpg')
+    background_image = background_image.resize((300, 250))
+    photo = ImageTk.PhotoImage(background_image)
+    Z = Label(homepage, image=photo)
+    Z.place(x=10, y=10)
+    Z.image = background_image
 
     frame1 = Frame(homepage)
     frame1.pack()
@@ -24,10 +30,7 @@ def runHomepage():
     frame4 = Frame(homepage)
     frame4.pack()
 
-    # file = open("EG_Logo.jpg")
-    # background_image = PhotoImage(file)
-    # Z = Label(frame1, image=background_image)
-    # Z.place(x=0, y=0, relwidth=1, relheight=1)
+
 
     A = Label(frame1, text="R8ME", font="device 30 bold", height=2)
     B = Label(frame1, text="Lecturer name", font="device 15")
@@ -59,5 +62,6 @@ def runHomepage():
 
 
     homepage.mainloop()
+
 
 runHomepage()
