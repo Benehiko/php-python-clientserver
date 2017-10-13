@@ -12,16 +12,9 @@ def runHomepage():
     homepage.title("Homepage")
     homepage.geometry("1000x800")
 
-    def commentsubmitted():
-        comment = g.get()
-        j.insert(0, comment)
-        messagebox.showinfo("Comment", "Your comment has been submitted")
-
-
     def showgroup(event):
-        selection = str(i.curselection()[0]+1)
-
-
+        selection = str(event)
+        print(selection)
 
     # background_image = Image.open('EG_Logo.jpg')
     # background_image = background_image.resize((300, 250))
@@ -42,18 +35,18 @@ def runHomepage():
 
 
 
-    a = Label(frame1, text="R8ME", font="device 30 bold", height=2)
+    a = Label(frame1, text="R8ME", font="device 30 bold", height=2, fg="blue")
     b = Label(frame1, text="Admin name", font="device 15")
     d = Label(frame2, text="Available groups:", bd=20, font="ansi 20")
 
-    h = Button(frame2, text="Mark", font="system 20 bold", command=getMarkpage)
+    h = Button(frame2, text="Mark", font="system 20 bold", command=getMarkpage, fg="red")
     i = Listbox(frame2, bd=2, selectmode=SINGLE, font="ansi 15")
     i.insert(0, "Group 1")
     i.insert(1, "Group 2")
     i.bind("<Button-1>", showgroup)
 
-    e = Label(frame3, text="Selected group:", font="ansi 20")
-    e.pack(side=LEFT)
+    # e = Label(frame3, text="Selected group:", font="ansi 20")
+    # e.pack(side=LEFT)
 
 
     a.pack()

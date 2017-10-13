@@ -35,7 +35,7 @@ def runHomepage():
 
 
 
-    a = Label(frame1, text="R8ME", font="device 30 bold", height=2)
+    a = Label(frame1, text="R8ME", font="device 30 bold", height=2, fg="blue")
     b = Label(frame1, text="Admin name", font="device 15")
     d = Label(frame2, text="Your group members:", bd=20, font="ansi 20")
     e = Label(frame3, text="Add a comment:", font="ansi 20")

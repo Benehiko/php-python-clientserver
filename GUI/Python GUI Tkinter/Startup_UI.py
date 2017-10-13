@@ -1,10 +1,11 @@
 from tkinter import *
-from core import Pyhandler
+#from core import Pyhandler
 from tkinter import messagebox
 
 
 top = Tk()
 
+top.title("EG's group marking application")
 def getRegister():
     from Register import runRegister
     runRegister()
