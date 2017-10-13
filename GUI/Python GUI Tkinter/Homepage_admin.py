@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-#from PIL import Image, ImageTk
+from PIL import Image, ImageTk
 
 def getMarkpage():
     from Markpage import runMarkpage
@@ -16,12 +16,12 @@ def runHomepage():
         selection = str(event)
         print(selection)
 
-    # background_image = Image.open('EG_Logo.jpg')
-    # background_image = background_image.resize((300, 250))
-    # photo = ImageTk.PhotoImage(background_image)
-    # z = Label(homepage, image=photo)
-    # z.place(x=10, y=10)
-    # z.image = background_image
+    background_image = Image.open('EG_Logo.jpg')
+    background_image = background_image.resize((250, 250))
+    photo = ImageTk.PhotoImage(background_image)
+    z = Label(homepage, image=photo)
+    z.place(x=10, y=10)
+    z.image = background_image
 
 
     frame1 = Frame(homepage)
@@ -51,7 +51,7 @@ def runHomepage():
 
     a.pack()
     b.pack()
-    d.pack(side=LEFT)
+    d.pack(side=TOP)
     h.pack(side=RIGHT, padx=20)
     i.pack(side=RIGHT, ipadx=50, pady=40)
 

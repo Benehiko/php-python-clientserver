@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-#from PIL import Image, ImageTk
+from PIL import Image, ImageTk
 
 
 
@@ -14,12 +14,12 @@ def runHomepage():
         j.insert(0, comment)
         messagebox.showinfo("Comment", "Your comment has been submitted")
 
-    # background_image = Image.open('EG_Logo.jpg')
-    # background_image = background_image.resize((300, 250))
-    # photo = ImageTk.PhotoImage(background_image)
-    # z = Label(homepage, image=photo)
-    # z.place(x=10, y=10)
-    # z.image = background_image
+    background_image = Image.open('EG_Logo.jpg')
+    background_image = background_image.resize((300, 250))
+    photo = ImageTk.PhotoImage(background_image)
+    z = Label(homepage, image=photo)
+    z.place(x=10, y=10)
+    z.image = background_image
 
     y = Label(homepage, text="Total Mark:", font="device 30 bold")
     y.place(x=50, y=500)

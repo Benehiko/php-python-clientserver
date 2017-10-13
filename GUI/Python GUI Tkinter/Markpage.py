@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-#from PIL import Image, ImageTk
+from PIL import Image, ImageTk
 
 
 def runMarkpage():
@@ -14,13 +14,15 @@ def runMarkpage():
         j.insert(0, comment)
         messagebox.showinfo("Comment", "Your comment has been submitted")
 
+    def marksubmitted():
+        messagebox.showinfo("Mark", "Marks have been successfully inputted :D")
 
     # background_image = Image.open('EG_Logo.jpg')
     # background_image = background_image.resize((300, 250))
     # photo = ImageTk.PhotoImage(background_image)
     # z = Label(markpage, image=photo)
-    # z.place(x=10, y=10)
-    # z.image = background_image
+    # z.place(x=10, y=500)
+    #z.image = background_image
 
 
     frame1 = Frame(markpage)
@@ -48,7 +50,7 @@ def runMarkpage():
     j = Listbox(frame4, bd=2)
     k = Scrollbar(j)
 
-    m = Button(frame2, text="Enter", font="system 10 bold")
+    m = Button(frame2, text="Enter", font="system 10 bold", command=marksubmitted)
     m.pack(side=RIGHT, padx=10)
     h = Entry(frame2, bd=3, width=5)
     h.pack(side=RIGHT)
