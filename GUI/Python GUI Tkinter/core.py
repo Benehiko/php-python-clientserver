@@ -12,6 +12,7 @@ class Pyhandler:
         self.url = "http://sepam.anzen-learning.xyz/"
         self.token = ""
         self.id = ""
+        self.username  = ""
         self.AccountType = ""
         self.AccountTypeID = ""
         #These headers are used to set the format in which our requests operate to the webserver. It is needed
@@ -56,6 +57,7 @@ class Pyhandler:
             return_data = self.post("login.php", data)
             try:
                 self.set_details(return_data)
+                self.username = username
                 print("Logged in\nID: ", str(self.id), "\nToken: ", str(self.token))
                 return True
             except ValueError:
@@ -127,8 +129,11 @@ class Pyhandler:
             print("Could not retrieve data")
             return False
         else:
-            data = msg
+            data = json.loads(msg)
             return data
+
+    def getUsername(self):
+        return self.username
 
     #update_data is to update any all user data.
     def update_data(self, data):
