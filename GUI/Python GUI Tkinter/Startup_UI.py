@@ -1,18 +1,17 @@
 from tkinter import *
 #from core import Pyhandler
 from tkinter import messagebox
+from gui import Gui
 
 
 top = Tk()
 
 top.title("EG's group marking application")
 def getRegister():
-    from Register import runRegister
-    runRegister()
+    gui.register()
 
 def getLogin():
-    from Login import runLogin
-    runLogin()
+    gui.login()
 
 def showHelp():
     messagebox.showinfo("Help", "If you are a new user, click on Register to create an account. If you already have an account, click on Log in.")
