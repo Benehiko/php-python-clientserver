@@ -43,7 +43,7 @@ class Gui():
 
     def adminPage(self):
         self.root = TK()
-        self.root.title("Homepage")
+        self.root.title("Admin Page")
         self.root.geometry("1000x800")
 
         rooms = []
@@ -57,17 +57,17 @@ class Gui():
         background_image = Image.open('EG_Logo.jpg')
         background_image = background_image.resize((250, 250))
         photo = ImageTk.PhotoImage(background_image)
-        z = Label(homepage, image=photo)
+        z = Label(self.root, image=photo)
         z.place(x=10, y=10)
         z.image = background_image
 
-        frame1 = Frame(homepage)
+        frame1 = Frame(self.root)
         frame1.pack()
-        frame2 = Frame(homepage)
+        frame2 = Frame(self.root)
         frame2.pack()
-        frame3 = Frame(homepage)
+        frame3 = Frame(self.root)
         frame3.pack(ipady=0)
-        frame4 = Frame(homepage)
+        frame4 = Frame(self.root)
         frame4.pack()
 
         a = Label(frame1, text="R8ME", font="device 30 bold", height=2, fg="blue")
