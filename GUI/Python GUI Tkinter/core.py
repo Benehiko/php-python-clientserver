@@ -60,9 +60,10 @@ class Pyhandler:
                 self.username = username
                 print("Logged in\nID: ", str(self.id), "\nToken: ", str(self.token))
                 return True
+                return True
             except ValueError:
                 print(return_data)
-        return True
+        return False
             # if len(return_data) > 0:
             #
             # else:
@@ -120,6 +121,49 @@ class Pyhandler:
     #get groupID for this user
     def get_groupID(self):
         return self.AccountTypeID
+
+    def get_roomID(self, roomName):
+        data = self.get_data()
+
+        for rooms in data['RoomDetails']:
+            if roomName == rooms['RoomName']:
+                return rooms['RoomID']
+
+    def getID_username(self, username):
+        data = self.get_data()
+
+        for rooms in data['RoomDetails']:
+            for students in rooms['Students']:
+                if username == students['Username']:
+                    return students['UserID']
+
+    def getComments(self, roomID):
+        data = self.get_data()
+        comment = []
+        student = ""
+        for rooms in data['RoomDetails']:
+            if roomID == rooms['RoomID']:
+                for students in rooms['Students']:
+                    student = students['Username']
+                    for comments in students['Comments']:
+                        temp = student+': '+str(comments)
+                        comment.append(temp)
+
+        return comment
+
+    def getStudents_room(self, roomName):
+        data = self.get_data()
+        students = []
+
+        for rooms in data['RoomDetails']:
+            print("RoomNames : ",roomName)
+            if rooms['RoomName'] == roomName:
+                for student in rooms['Students']:
+                    students.append(student['Username'])
+
+            print(students)
+
+        return students
 
     #get_data is for getting the current user data - does not matter if user is student or admin.
     def get_data(self):

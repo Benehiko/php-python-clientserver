@@ -10,7 +10,7 @@ test = Pyhandler()
 
 def login_selection():
     if test.login("ater13@student.monash.edu", "password1234!"):
-        loginselect = raw_input("1.Create Room\n2.List Rooms\n3.Add User\n4.Upload Mark\n5.Commit Data\n6.Go back to main\n")
+        loginselect = input("1.Create Room\n2.List Rooms\n3.Add User\n4.Upload Mark\n5.Commit Data\n6.Go back to main\n")
         if loginselect == "1":
             roomName = "TestRoom"
             test.create_room(roomName)
@@ -38,7 +38,7 @@ def login_selection():
             main_menu()
 
 def room_management():
-    selection = raw_input("Select Room")
+    selection = input("Select Room")
     data = test.get_data()
 
 def list_rooms():
@@ -49,7 +49,7 @@ def list_rooms():
 
 def main_menu():
     while True:
-        selection = raw_input("1.Login\n2.Logout\n3.Check Login\n4.Get Data\n5.Register\n6.Exit\n")
+        selection = input("1.Login\n2.Logout\n3.Check Login\n4.Get Data\n5.Register\n6.Exit\n")
         if selection == "1":
             login_selection()
 
